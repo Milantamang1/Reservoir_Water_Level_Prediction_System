@@ -1,0 +1,150 @@
+{% extends "_master.html" %} {% block main %}
+<h1>Analytics</h1>
+<div class="analyse">
+  <div class="sales">
+    <div class="status">
+      <div class="info">
+        <h3>Total Post</h3>
+        <h1>{{ total_posts }}</h1>
+      </div>
+      <div class="progresss">
+        <svg>
+          <circle cx="38" cy="38" r="36"></circle>
+        </svg>
+        <div class="percentage"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Analyses -->
+
+<!-- New Users Section -->
+<style>
+  .new-users {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  canvas {
+    max-width: 100%;
+  }
+</style>
+<div class="new-users">
+    <h2>Prediction Graph</h2>
+    <canvas id="predictionChart" width="400" height="200"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Pass the prediction data from Django as a JSON string
+    const predictionData = JSON.parse('{{ prediction_data|escapejs }}');
+  
+    const ctx = document.getElementById("predictionChart").getContext("2d");
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: predictionData.dates,
+        datasets: [
+          {
+            label: "Prediction Values",
+            data: predictionData.values,
+            borderColor: "rgba(75, 192, 192, 1)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderWidth: 2,
+            fill: true,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Dates",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Prediction Value",
+            },
+          },
+        },
+      },
+    });
+  </script>
+  
+  
+
+<!-- End of New Users Section -->
+
+<!-- Recent Orders Table -->
+<div class="recent-orders">
+  <h2>Recent Posts</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>S.N.</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in recent_posts %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <!-- Serial number -->
+        <td>{{ post.title }}</td>
+        <td>{{ post.description|truncatewords:15 }}</td>
+        <!-- Truncate description -->
+
+        <td>
+          <img src="{{ post.post_img.url }}" width="100" height="100" alt="" />
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No recent posts available.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock main %} {% block right %}
+<div class="nav">
+  <button id="menu-btn">
+    <span class="material-icons-sharp"> menu </span>
+  </button>
+  <div class="dark-mode">
+    <span class="material-icons-sharp active"> light_mode </span>
+    <span class="material-icons-sharp"> dark_mode </span>
+  </div>
+
+  <div class="profile">
+    <div class="info">
+      <p>Hey</p>
+      <small class="text-muted">Admin</small>
+    </div>
+  </div>
+</div>
+
+<div class="user-profile">
+  <div class="logo">
+    <img width="" height="" alt="" src="media/images/logo.png" />
+    <h2>Reservoir Prediction By</h2>
+    <p>Fullstack Web Developers</p>
+  </div>
+</div>
+
+{% endblock right %}

@@ -1,0 +1,201 @@
+{% load active_url %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEJrZRNXw8Rr+KnujsWFLU5dgpipIqkLyKNw7ka/gm5J6nt8S4LHg5WJ7yOPE"
+      crossorigin="anonymous"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <title>Hydropower | Dashboard</title>
+
+    <style>
+      aside {
+        position: sticky;
+        top: 0;
+        left: 0;
+      }
+      main {
+        padding: 15px 20px;
+      }
+      .errorlist {
+        color: red;
+      }
+      .form-container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333333;
+      }
+      label {
+        font-weight: bold;
+        color: #333333;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      input[type="text"],
+      input[type="file"],
+      textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1.2rem;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: #333333;
+      }
+      textarea {
+        resize: vertical;
+      }
+      button {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .button {
+        position: relative;
+        display: inline-block;
+        margin: 20px;
+      }
+
+      .button a {
+        color: white;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+        text-decoration: none;
+        background-color: #ffa12b;
+        display: block;
+        position: relative;
+        padding: 10px 15px;
+
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        text-shadow: 0px 1px 0px #000;
+        filter: dropshadow(color=#000, offx=0px, offy=1px);
+
+        -webkit-box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+        -moz-box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+        box-shadow: inset 0 1px 0 #ffe5c4, 0 10px 0 #915100;
+
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+
+      .button a:active {
+        top: 10px;
+        background-color: #f78900;
+
+        -webkit-box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3px 0 #915100;
+        -moz-box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3pxpx 0 #915100;
+        box-shadow: inset 0 1px 0 #ffe5c4, inset 0 -3px 0 #915100;
+      }
+
+      .button:after {
+        content: "";
+        height: 100%;
+        width: 100%;
+        padding: 4px;
+        position: absolute;
+        bottom: -15px;
+        left: -4px;
+        z-index: -1;
+        background-color: #2b1800;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="toggle">
+          <a href="{% url 'index' %}">
+            <div class="logo">
+              <img
+                width=""
+                height=""
+                alt=""
+                src="{% static 'images/logo.png' %}"
+              />
+              <h2>Asmr<span class="danger">Prog</span></h2>
+            </div>
+          </a>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp">close</span>
+          </div>
+        </div>
+        <div class="sidebar">
+          <a
+            href="{% url 'dash_index' %}"
+            class="{% active request 'dash_index' %}"
+          >
+            <span class="material-icons-sharp">dashboard</span>
+            <h3>Dashboard</h3>
+          </a>
+          <a
+            href="{% url 'manage-post' %}"
+            class="{% active request 'manage-post' %}"
+          >
+            <span class="material-icons-sharp">person_outline</span>
+            <h3>Manage Post</h3>
+          </a>
+          <a
+            href="{% url 'prediction' %}"
+            class="{% active request 'prediction' %}"
+          >
+            <span class="material-icons-sharp">show_chart</span>
+            <h3>Prediction</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <main>{% block main %} {% endblock main %}</main>
+      <div class="right-section">{% block right %} {% endblock right %}</div>
+    </div>
+    <script src="{% static 'js/orders.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+  </body>
+</html>

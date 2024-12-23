@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predict Water Level</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+      }
+      .container {
+        width: 50%;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .error {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Water Level Prediction</h1>
+
+      <form method="POST" action="{% url 'predict_water_level' %}">
+        {% csrf_token %}
+        <label for="rainfall">Rainfall (mm):</label>
+        <input type="text" id="rainfall" name="rainfall" required />
+
+        <label for="temperature">Temperature (°C):</label>
+        <input type="text" id="temperature" name="temperature" required />
+
+        <label for="humidity">Specific Humidity (g/kg):</label>
+        <input type="text" id="humidity" name="humidity" required />
+
+        <label for="specific_humidity">Relative Humidity (%):</label>
+        <input
+          type="text"
+          id="specific_humidity"
+          name="specific_humidity"
+          required
+        />
+
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if predicted_water_level %}
+      <div class="result">
+        <p>
+          Predicted Water Level:
+          <strong>{{ predicted_water_level }} meters</strong>
+        </p>
+      </div>
+      {% elif error %}
+      <div class="error">
+        <p>{{ error }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

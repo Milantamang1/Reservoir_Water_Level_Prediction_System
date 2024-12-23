@@ -1,0 +1,63 @@
+{% extends "_master.html" %} {% block main %}
+<div>
+  <div class="button">
+    <a href="{% url 'post' %}">Create Post</a>
+  </div>
+</div>
+<div class="recent-orders">
+  <h2>Uploaded Post</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>S.N.</th>
+        <th>Title</th>
+        <th>Keywords</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.keywords }}</td>
+        <td>{{ post.description }}</td>
+        <td>
+          <img src="{{ post.post_img.url }}" width="100" height="100" alt="" />
+        </td>
+        <td>
+          <a href="{% url 'edit-post' post.id %}"
+            ><span class="primary">Edit</span></a
+          >
+          <a href="{% url 'delete-post' post.id %}"
+            ><span class="danger">Delete</span></a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock main %} {% block right %}
+<div class="nav">
+  <button id="menu-btn">
+    <span class="material-icons-sharp"> menu </span>
+  </button>
+  <div class="dark-mode">
+    <span class="material-icons-sharp active"> light_mode </span>
+    <span class="material-icons-sharp"> dark_mode </span>
+  </div>
+
+  <div class="profile">
+    <div class="info">
+      <p>Hey,</p>
+      <small class="text-muted">Admin</small>
+    </div>
+    <div class="profile-photo">
+      <img width="" height="" alt="" src="" />
+    </div>
+  </div>
+</div>
+{% endblock right %}
